@@ -1,3 +1,17 @@
 docker-compose run --rm npm install
 docker-compose run --rm npm run build
 docker-compose run --rm --service-ports npm run dev
+
+mv example/* ./
+mv example/.* ./
+rm -rf example
+cp .env.example .env
+sudo apt install make
+add Makefile
+
+sudo chown -R www-data:www-data src/
+sudo chmod -R 775 /src/storage
+sudo chmod -R 775 /src/bootstrap/cache
+
+service docker status
+sudo service docker start
