@@ -13,7 +13,7 @@
 - `docker-compose run --rm npm run dev`
 - `docker-compose run --rm artisan migrate`
 
-## npm bilan bog'liq xizmatlar
+## Npm bilan bog'liq xizmatlar
 
 ```json
 "scripts": {
