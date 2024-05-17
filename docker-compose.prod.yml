@@ -1,0 +1,80 @@
+networks:
+  laravel:
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./src:/var/www
+      - ./_docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - laravel
+
+  php:
+    build:
+      context: .
+      dockerfile: ./_docker/php/Dockerfile
+    container_name: php
+    depends_on:
+      - mysql
+    ports:
+      - 9000:9000
+    volumes:
+      - ./src:/var/www
+      - ./_docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+    networks:
+      - laravel
+
+  mysql:
+    image: mariadb:10.6
+    container_name: mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: amHnt6466wEiTCO
+      MYSQL_ROOT_PASSWORD: bVuhLPzfxavHjr4VrF5
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - laravel
+
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    container_name: phpmyadmin
+#    restart: always
+#    ports:
+#      - 8080:80
+#    depends_on:
+#      - mysql
+#    environment:
+#      PMA_HOST: mysql
+#      MYSQL_ROOT_PASSWORD: root
+#      UPLOAD_LIMIT: 512M
+#    networks:
+#      - laravel
+
+#  npm:
+#    image: node:20-alpine
+#    container_name: npm
+#    volumes:
+#      - ./src:/var/www
+#    ports:
+#      - 3000:3000
+#    working_dir: /var/www
+#    entrypoint: [ "npm" ]
+#    depends_on:
+#      - php
+#    networks:
+#      - laravel

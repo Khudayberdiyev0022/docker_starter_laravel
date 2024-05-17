@@ -1,3 +1,8 @@
+lsb_release -a
+
+ssh-keygen -t rsa
+cat ~/.ssh/id_rsa.pub
+
 docker-compose run --rm npm install
 docker-compose run --rm npm run build
 docker-compose run --rm --service-ports npm run dev

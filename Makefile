@@ -27,3 +27,12 @@ key-generate:
 
 storage-link:
 	docker-compose exec php php artisan storage:link
+
+optimize:
+	docker-compose exec php php artisan optimize:clear
+
+about:
+	docker-compose exec php php artisan about
+
+route:
+	docker-compose exec php php artisan route:list
